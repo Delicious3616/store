@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<!-- 1、指定基础语言 -->
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <!--2、指定视口信息-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <!--3、指定跨IE浏览器兼容性-->
+    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
+    <title>组件-下拉菜单</title>
+    <!--4、引入 Bootstrap.css-->
+    <link rel="stylesheet" href="css/lib/bootstrap.css"/>
+    <!--5、引入两个兼容性文件(老IE)-->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+     div.login{
+        margin-top:10px;
+     }
+     div.login>p{
+        float:left;
+
+     }   
+     div.login>ul{
+        float:right;
+        list-style: none; 
+     }
+     div.login>ul>li{
+        float:left;
+
+     }
+     .clear{
+        content:"";
+        display: block;
+        clear: both;
+     }
+     /*个人中心，购物车，收藏夹前图标*/
+     div.login>ul>li span{
+        display: inline-block;
+        width:18px;
+        height: 18px;
+        transform: scale(0.9);
+     }
+     #personal-center{
+         
+        background: url(images/ibar_sprites.png) no-repeat  ;
+        
+     }
+     #shop-stor{
+        background: url(images/ibar_sprites.png) no-repeat 0 -29px ;
+     }
+     #favrite{
+         background: url(images/ibar_sprites.png) no-repeat 0 -85px ;
+     }
+     /*设置个人中心图标和个人中心文字垂直居中*/
+     div.login li a span{
+        vertical-align:middle;
+
+     }
+     /*搜索栏*/
+     #search input{
+        height: 50px;
+        border:2px solid #F03726;
+     }
+     /*输入框尺寸510px*/
+     input.input-field{
+        width: 510px;
+        
+     }
+     
+     
+     #search>input+input{
+        background:#F03726;
+        width: 125px;
+        position: relative;
+        margin-left:-5px;
+        
+
+     }
+     #search>input{
+        
+        margin-top:35px;
+     }
+     /*图片缩小0.9，加右外边距,当屏幕为手机时，图片缩小为0.7,右边距15px*/
+     #search>img{
+        transform: scale(0.9);
+        margin-right: 30px;
+        
+     }
+     @media screen and(max-width: 766px){
+        #search>img{
+            transform:scale(0.7);
+            margin-right: 15px;
+        }
+     }
+        /*横向分类列表，水平，加左侧边框，全部分类加背景色，字体大小，左右边距*/
+        #kinds{
+            margin-left:-15px;
+            margin-bottom: 0;
+
+
+        }
+        ul.clo-kind{
+            padding-left:-15px;
+            padding-left:0;
+        }
+
+        ul.clo-kind>li:first-child{
+
+            width: 144px;
+        }
+        ul.clo-kind>li{
+            float: left;
+            list-style: none;
+            border-top:0;
+            border-right:0;
+            border-bottom: 0;
+            border-left:1px;
+            border-style: solid;
+            border-color: #ddd;
+            width:95px;
+            text-align: center;
+            font-size:1.2em;
+            font-weight: bold;
+            height: 2.2em;
+            text-align: center;
+            line-height: 2.2em;
+
+
+        }
+        ul.clo-kind>li a{
+            text-decoration: none;
+            color:block;
+        }
+        ul.clo-kind>li:first-child{
+            background: #d2364b;
+        }
+        /*我的福利设置，靠右，背景高度宽度,字体颜色，下外边距-4px*/
+        .my-welfare{
+            float:right;
+            background:url(images/extra.png); 
+            font-size: 1.4em;
+            color: yellow;
+            padding:2px;
+            margin-bottom: -4px;
+            transform: translateY(-3px);
+        }
+        /*vertical-list设置,列表符号去掉，字体大小，加粗，颜色，背景,下边框1px*/
+        
+        
+        #vertical-list>li{
+            list-style: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            background-color: black;
+            width: 144px;
+            padding:5px;
+            border-bottom: 1px solid #ddd;
+        }
+        #vertical-list>li>a{
+            color: white;
+            text-decoration: none;
+        }
+        /*竖向列表加入前面的图标,左右外边距*/
+        #vertical-list>li>a>span{
+            display: inline-block;
+            width:25px;
+            height: 25px;
+            background-size: cover;
+            margin:0 10px;
+            line-height: 25px;
+            vertical-align: middle;
+
+        }
+        #vertical-list>li:nth-child(1) span{
+            background-image: url(images/cake.png);
+        } 
+        #vertical-list>li:nth-child(2) span{
+            background-image: url(images/cookies.png);
+        }
+        #vertical-list>li:nth-child(3) span{
+            background-image: url(images/meat.png);
+        }
+        #vertical-list>li:nth-child(4) span{
+            background-image: url(images/bamboo.png);
+        }
+        #vertical-list>li:nth-child(5) span{
+            background-image: url(images/nut.png);
+        }
+        #vertical-list>li:nth-child(6) span{
+            background-image: url(images/candy.png);
+        }
+        #vertical-list>li:nth-child(7) span{
+            background-image: url(images/chocolate.png);
+        }
+        #vertical-list>li:nth-child(8) span{
+            background-image: url(images/fish.png);
+        }
+        #vertical-list>li:nth-child(9) span{
+            background-image: url(images/tea.png);
+        }
+        #vertical-list>li:nth-child(10) span{
+            background-image: url(images/package.png);
+        }
+        /*背景图插入，尺寸，平铺*/
+        #vertical-list-all>ul{
+            margin-bottom: 0;
+            width:144px;
+            padding-left:0;
+            float:left;
+        }
+        
+        /*背景宽度1011px*/
+        #vertical-list-all>div.ad{
+            width: 971px;
+            height: 360px;
+            background:url(images/ad1.jpg);
+            background-size: cover;
+            float:left;
+            
+        }
+        /*今日推荐高度*/
+        div.recommend li{
+            height:133px;
+            text-decoration:none;
+            list-style: none;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        /*今日推荐背景图，文字，2016*/
+        div.recommend>ul>li:nth-child(1){
+            font-size:35px; 
+            color: white;
+            vertical-align: middle;
+            background:url(images/clockbg.png);
+        }    
+        div.recommend>ul>li a{
+            display:inline-block;
+            width:120px;
+            height:120px;
+            position: absolute;
+            top: 1px;
+            right: 5px;
+            
+            vertical-align: middle;
+            transition: right 0.3s linear;
+        }
+        /*插入4个图片*/
+        div.recommend>ul>li:nth-child(1) a{
+          background:url(images/2016.png); 
+          background-size: cover; 
+        }
+        div.recommend>ul>li:nth-child(2)>a{
+          background:url(images/tj.png) no-repeat; 
+          background-size: cover;
+          
+        }
+        div.recommend>ul>li:nth-child(3)>a{
+          background:url(images/tj1.png) no-repeat; 
+          background-size: cover;
+          
+        }
+        div.recommend>ul>li:nth-child(4)>a{
+          background:url(images/tj2.png) no-repeat; 
+          background-size: cover;
+          
+        }
+
+        div.recommend>ul>li:nth-child(1)>p{
+            margin: 20px 25px 10px;
+            border:0;
+        }
+        div.recommend>ul>li:nth-child(2)>p{
+            
+            border:0;
+        }
+        div.recommend>ul>li p{
+            display: inline-block;
+            margin: 0;
+            height:60%;
+            border-left:1px solid #ddd;
+            padding-left:15px;
+
+        }
+        /*今日推荐左内边距设为0*/
+        div.recommend>ul{
+            padding-left: 0;
+            margin-top:20px;
+            margin-bottom: 20px;
+        }
+        /*鼠标悬停效果*/
+        #cotrol2:hover  #move2,#cotrol3:hover  #move3,#cotrol4:hover  #move4{
+            right:22px;
+        }
+       
+        /*活动部分*/
+        /*活动标题，字颜色大小，去除下划线，两段对齐*/
+        #activity-title{
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid black;
+        }
+        #activity-title span{
+            font-size:1.5em;
+            font-weight: bold;
+
+        }
+         #activity-title a{
+            text-decoration: none;
+         }
+         /*第二行图片部分，后3副图片设置3px左边距，上下5px*/
+         #activity-pic>ul{
+            padding:0;
+            margin-top:14px;
+            margin-bottom:14px;
+         }
+          #activity-pic>ul>li{
+            padding-left:0;
+            list-style: none;
+            position: relative;
+          }
+          
+          /*图片大小等于li,并设置文字背景位置*/
+          #activity-pic>ul>li>img{
+            float:left;
+            width:277.5px;
+          }
+
+          #activity-pic>ul>li>input{
+            float:left;
+            width: 161px;
+            height: 70px;
+            
+            text-align: center;
+            line-height: 70px;
+            transform: rotate(-45deg);
+            border:0;
+            position:absolute;
+            top:-17px;
+            left:-50px;
+
+          }
+           #activity-pic>ul>li:nth-child(1)>input{
+                background-color: #9b0d5f;
+           }
+           #activity-pic>ul>li:nth-child(2)>input{
+                background-color: #b48c66;
+           }
+           #activity-pic>ul>li:nth-child(3)>input{
+                background-color: #7fb113;
+           }
+           #activity-pic>ul>li:nth-child(4)>input{
+                background-color: #0087e5;
+           }
+           #activity-pic>ul>li>p.second-buy{
+            font-size: 1.4em;
+            position: absolute;
+            top:8px;
+            left:11px;
+            color:white;
+           }
+           #activity-pic>ul>li{
+                overflow: hidden;
+           }
+           /*春节送好礼文字*/
+           #activity-pic>ul>li>p.spring{
+            text-align: center;
+            padding:5px 0;
+            width: 90%;
+            background: #eee;
+            position: absolute;
+            top:259px;
+            left:7px;
+           }
+            /*甜品部分*/
+            /*第一行甜品title*/
+            #sweet-title{
+            margin-top:20px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid black;
+        }
+        #sweet-title span{
+            font-size:1.5em;
+            font-weight: bold;
+
+        }
+         #sweet-title a{
+            text-decoration: none;
+         }
+         /*第一行甜品title结束*/
+            /*第二行图片部分*/
+            /*左侧背景颜色*/
+            #sweet-pic>div[id=sweet-left]{
+                border-top:1px solid #fff;
+                background: #6bdea7;
+                margin-left: 15px;
+            }
+            /*六个圆形链接*/
+            #sweet-left>ul{
+                
+                width:214px;
+                padding-left:0;
+                margin-top:20px;
+            }
+
+            #sweet-left>ul>li{
+                float:left;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: #eee;
+                list-style: none;
+                color: black;
+                margin: 2px;
+            }
+            #sweet-left>ul>li>a{
+                display: block;
+                text-align: center;
+                line-height: 50px;
+                color: black;
+                font-size:1.2em;
+
+            }
+            /*六个圆形链接结束*/
+            /*开抢啦字体，居中显示*/
+            #sweet-left>h5{
+                color: white;
+                text-align: center;
+                margin-top: 165px;
+            }
+            #sweet-left>p{
+                
+                text-align: center;
+                
+            }
+            /*酒的照片*/
+            #sweet-left>img{
+                width:100%;
+                margin-bottom: 15px;
+            }
+            /*左侧照片左下角小的折叠效果*/
+            #sweet-left>div[id=small-div]{
+                width: 30px;
+                height: 30px;
+                border-top: 30px solid #68937f;
+                border-left: 30px solid #fff;
+                position: relative;
+                left: -15px;
+                bottom: 0;
+            }
+            /*第二行三个图片*/
+            #sweet-center>div{
+                padding:0;
+            }
+
+            #sweet-center>div>div{
+                height: 218px;
+            }
+            #sweet-center>div>div:first-child{
+                text-align: center;
+                border-bottom: 1px solid #eee;
+            }
+            #sweet-center>div>div:nth-child(2){
+                text-align: center;
+               
+            }
+            #sweet-center>div:nth-child(2){
+                text-align: center;
+                height: 436px;
+                border-left: 1px solid #eee;
+                border-right: 1px solid #eee;
+                text-align: center;
+            }
+            #sweet-center>div:nth-child(2)>img{
+                position: relative;
+                bottom: -163px;
+                transform: scale(1.2);
+            }
+            #sweet-center>div:nth-child(2)>h5{
+                position: relative;
+                top:130px;
+            }
+            #sweet-center>div:nth-child(2)>p{
+                position: relative;
+                top:130px;
+            }
+            /*右侧三个图片*/
+            #sweet-right>div{
+                padding:0;
+            }
+
+            #sweet-right>div>div{
+                height: 218px;
+            }
+            #sweet-right>div>div:first-child{
+                text-align: center;
+                border-bottom: 1px solid #eee;
+            }
+            #sweet-right>div>div:nth-child(2){
+                text-align: center;
+                
+            }
+            #sweet-right>div:nth-child(2){
+
+                height: 436px;
+                border-left: 1px solid #eee;
+                border-right: 1px solid #eee;
+                text-align: center;
+            }
+            #sweet-right>div:nth-child(2)>img{
+                position: relative;
+                bottom: -163px;
+                transform: scale(1.2);
+            }
+            #sweet-right>div:nth-child(2)>h5{
+                position: relative;
+                top:130px;
+            }
+            #sweet-right>div:nth-child(2)>p{
+                position: relative;
+                top:130px;
+            }
+            footer ul>li{
+                height: 15px;
+                line-height: 15px;
+                list-style: none;
+                float:left;
+                margin-right: 10px;
+            }
+            footer ul>li+li{
+                border-left:1px solid #DDD;
+                padding-left:5px;
+
+            }
+            
+            footer>div{
+                width: 1200px;
+                margin:20px auto; 
+                border-top: 2px solid orange;
+            }
+            footer>div>div{
+                height: 25px;
+                
+            }
+            footer>div>div:nth-child(1){
+
+                border-bottom: 1px solid #DDD;
+
+            }
+            footer>div>div:nth-child(2){
+
+                margin-top:5px;
+
+            }
+            footer ul{
+                padding:0;
+            }
+            
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 1、网站头部：登陆注册一行+搜索 -->
+    <header class="row">
+        <!-- 登陆注册 -->
+        <div class="login col-md-12 hidden-xs">
+            <p>亲，请 <a href="#">登陆</a> &nbsp; <a href="#">免费注册</a></p>
+            <ul>
+                <li>商城首页 &nbsp;</li>
+                <li><a href="#" ><span id="personal-center"></span>个人中心 &nbsp;</a></li>
+                <li><a href="#" ><span  id="shop-stor"></span>购物车 &nbsp;</a></li>
+                <li><a href="#"><span  id="favrite"></span>收藏夹</a></li>
+            </ul>
+        </div>
+    </header>   
+        <!-- 搜索 -->
+       
+        <div id="search" class="row">
+            <img src="images/logobig.png" class="col-md-3">
+            <input type="text" value="搜索" class="input-field  ">
+            <input type="button" value="搜索" >
+        </div>
+       
+    
+        
+    <!-- 2、全部分类、横竖分类列表 -->
+    <!-- 横向分类列表 -->
+    <div id="kinds" class="row">
+        <ul class="clo-kind">
+            <li><a href="#">全部分类</a></li>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">闪购</a></li>
+            <li><a href="#">限时抢</a></li>
+            <li><a href="#">团购</a></li>
+            <li><a href="#">大包装</a></li>
+            
+        </ul>
+        <div class="my-welfare">
+            <span class="glyphicon glyphicon-user"></span>
+            我的福利 &nbsp;&gt;
+        </div>
+    </div>
+    <!-- 下侧列表及背景图 -->
+    <div id="vertical-list-all" class="row">
+        <!-- 竖向列表 -->
+        <ul id="vertical-list">
+            <li><a href="#"><span class="list-pic1"></span>点心/蛋糕&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic2"></span>熟食/肉类&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic3"></span>饼干/膨化&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic4"></span>素食/卤味&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic5"></span>坚果/炒货&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic6"></span>糖果/蜜饯&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic7"></span>巧克力&nbsp;&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic8"></span>海味/河鲜&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic9"></span>花果/果茶&nbsp;&nbsp;&gt;</a></li>
+            <li><a href="#"><span class="list-pic10"></span>品牌/礼包&nbsp;&nbsp;&gt;</a></li>
+        </ul>
+        <!-- 背景图 -->
+        <div class="ad ">
+            
+        </div>
+    </div>
+
+    <!-- 3、今日推荐 -->
+    <div class="recommend">
+        <ul class="row">
+            <li class="col-md-3"><p>今日<br />推荐</p><a href="#"></a></li>
+            <li class="col-md-3" id="cotrol2"><p><b>真的有鱼</b><br>开年福利篇</p><a href="#" id="move2"></a></li>
+            <li class="col-md-3" id="cotrol3"><p><b>囤货过冬</b><br>让爱早回家</p><a href="#" id="move3"></a></li>
+            <li class="col-md-3" id="cotrol4"><p><b>浪漫情人节</b><br>甜甜蜜蜜</p><a href="#" id="move4"></a></li>
+        </ul>
+    </div>
+    <!-- 4、活动 -->
+    <div id="activity" class="row">
+        <!-- 第一行标题部分 -->
+        <div id="activity-title" >
+            <p><span>活动</span>&nbsp;每期活动&nbsp;优惠享不停</p>
+            <a href="#">全部活动&nbsp;&gt;</a>
+        </div>
+        <!-- 第二行图片部分 -->
+        <div id="activity-pic">
+            <ul>
+                <li class="col-md-3">
+                    <img src="images/activity1.jpg">
+                    <input type="text" >
+                    <p class="second-buy">秒杀</p>
+                    <p class="spring">春节送礼优选</p>
+                </li>
+                <li class="col-md-3">
+                    <img src="images/activity2.jpg">
+                    <input type="text" >
+                    <p class="second-buy">特惠</p>
+                    <p class="spring">春节送礼优选</p>
+                </li>
+                <li class="col-md-3">
+                    <img src="images/activity3.jpg">
+                    <input type="text" >
+                    <p class="second-buy">团购</p>
+                    <p class="spring">春节送礼优选</p>
+                </li>
+                <li class="col-md-3">
+                    <img src="images/activity.jpg">
+                    <input type="text" >
+                    <p class="second-buy">超值</p>
+                    <p class="spring">春节送礼优选</p>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+    <!-- 5、甜品 -->
+    <div id="sweet" class="row"> 
+            <!-- 上侧标题区域 -->
+        <div id="sweet-title"  class="col-md-12">
+            <p><span>甜品</span>&nbsp;每一道甜品都有一个故事</p>
+            <div>
+                <a href="#">桂花糕&nbsp;</a>
+                <a href="#">奶皮酥&nbsp;</a>
+                <a href="#">栗子糕&nbsp;</a>
+                <a href="#">马卡龙&nbsp;</a>
+                <a href="#">铜锣烧&nbsp;</a>
+                <a href="#">豌豆黄&nbsp;&nbsp;</a>
+                <a href="#">更多美味&nbsp;&gt;</a>
+            </div>
+        </div >    
+                 <!-- 甜品下行图片区域 -->
+
+        <div id="sweet-pic" class="col-mad-12 row">
+        <!-- 左侧图片 -->
+            <div id="sweet-left" class="col-md-2">
+                <!-- 六个圆形链接 -->
+                <ul>
+                    <li><a href="#">核桃</a></li>
+                    <li><a href="#">核桃</a></li>
+                    <li><a href="#">核桃</a></li>
+                    <li><a href="#">核桃</a></li>
+                    <li><a href="#">核桃</a></li>
+                    <li><a href="#">核桃</a></li>
+                </ul>
+                <!-- 开抢啦，零食大礼包 -->
+                <h5>开枪啦</h5>
+                <p>零食大礼包</p>
+                <!-- 酒的图片 -->
+                <img src="images/act1.png">
+                <!-- 左下角折叠效果 -->
+                <div id="small-div">
+                    
+                </div>
+            </div> 
+            <!-- 中间 -->
+
+            <div id="sweet-center" class="col-md-5 row">
+            <!-- 竖向两幅 -->
+                <div class="col-xs-5">
+                    <div>
+                        <img src="images/1.jpg">
+                        
+                        <h5>&nbsp;雪之恋和风大福</h5>
+                        <p>&nbsp;&yen;13.8</p>
+                    </div>
+                    <div>  
+                       <img src="images/2.jpg">
+                       <h5>&nbsp;雪之恋和风大福</h5>
+                        <p>&nbsp;&yen;13.8</p>
+                    </div>    
+                </div>
+                <div class="col-xs-7">
+                    
+                    <h5>&nbsp;雪之恋和风大福</h5>
+                     <p>&nbsp;&yen;13.8</p>
+                     <img src="images/5.jpg">
+                </div >
+            </div>
+            <!-- 右侧 -->
+             <div id="sweet-right" class="col-md-5 row">
+                <div class="col-xs-5">
+                    <div>
+                        <img src="images/4.jpg">
+                        
+                        <h5>&nbsp;小优补丁</h5>
+                        <p>&nbsp;&yen;13.8</p>
+                    </div>
+                    <div>  
+                       <img src="images/3.jpg">
+                       <h5>&nbsp;小优补丁</h5>
+                        <p>&nbsp;&yen;13.8</p>
+                    </div>    
+                </div>
+                <div class="col-xs-7">
+                    
+                    <h5>&nbsp;小优补丁</h5>
+                     <p>&nbsp;&yen;13.8</p>
+                     <img src="images/5.jpg">
+                </div >
+            </div>
+            </div>
+        </div>    
+    </div>
+    <!-- 6、坚果 -->
+    <!-- 7、footer -->
+    <footer>
+        <div>
+            <div>
+                <ul>
+                    <li>恒望科技</li>
+                    <li>商城首页</li>
+                    <li>支付宝</li>
+                    <li>物流</li>
+                </ul>
+            </div>
+            <div>
+                <a href="#">关于恒望</a>       
+                <a href="#">合作伙伴</a>
+                <a href="#">联系我们</a>
+                <a href="#">网站地图</a>
+                © 2015-2025 Hengwang.com 版权所有.
+                <a href="#">更多模板</a>
+                <a href="#">模板之家</a>
+                - Collect from 
+                <a href="#">网页模板</a>
+
+            </div>
+        </div>
+    </footer>
+    <!-- 8、右侧固定竖条 -->
+        
+    
+</div>
+
+
+
+
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<!--6、引入 行为依赖 文件-->
+<script src="js/lib/jquery-1.11.3.js"></script>
+<script src="js/lib/bootstrap.js"></script>
+<!--7、引入测试的JS文件-->
+<script src="js/lib/bootlint.js"></script>
+<script>
+    bootlint.showLintReportForCurrentDocument([]);
+</script>
+</body>
+</html>

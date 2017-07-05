@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情页</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		/*header没有宽度，给#header设置一个宽度1200px*/
+
+		*{
+			font-size: 15px;
+			color: black;
+		}
+		header{
+			border-bottom: 2px solid #d2364c;
+		}
+		#header{
+			width:1200px;
+			margin: 0 auto;
+			
+		}
+		a{
+			text-decoration: none;
+			
+		}
+		ul{
+			list-style: none;
+		}
+		/*登陆一行靠右的ul右浮动,添加图标*/
+		#login ul{
+			float: right;
+			display: flex;
+			margin-top:0; 
+		}
+		#login ul>li{
+			margin-right:10px;
+		}
+		#login ul>li>span{
+			display:inline-block;
+			width: 18px;
+			height: 18px;
+			vertical-align: middle;
+
+		}
+		#login ul>li:nth-child(2)>span{
+			background:url(images/ibar_sprites.png) no-repeat ;
+		}
+		#login ul>li:nth-child(3)>span{
+			background:url(images/ibar_sprites.png) no-repeat 0 -28px;
+		}
+		#login ul>li:nth-child(4)>span{
+			background:url(images/ibar_sprites.png) no-repeat 0 -84px;
+		}
+		/*搜索框一栏：搜索框尺寸，搜索尺寸位置*/
+		#search{
+			text-align: center;
+
+		}
+		#search img{
+			vertical-align: middle;
+		}
+		#search input{
+			width: 86%;
+			height: 30px;
+			background-color: white;
+			float:left;
+			
+		}
+		#search button{
+			width:50%;
+			height: 45px;
+			background: #F03726;
+			font-size: 1.5em;
+
+		}
+		/*搜索框下测横向分类*/
+		#main-nav>ul{
+			display: flex;
+			padding:0 ;
+			margin-bottom: 0;
+		}
+		#main-nav>ul>li{
+			height:3em;
+
+
+		}
+		#main-nav>ul>li:first-child{
+			background-color:#d2364c;
+			color:white; 
+		}
+		#main-nav>ul>li:first-child>a{
+		    color: white;
+		}
+		#main-nav>ul>li>a{
+			font-size: 1.4em;
+			font-weight: bold;
+			margin:5px 20px;
+			position: relative;
+    		top: 11px;
+
+
+
+		}
+		#main-nav>ul>li>span{
+			height: 10px;
+			border-right:1px solid #ddd; 
+		}
+		/*详情页头部,上侧为面包屑导航，（左侧4福图片），右侧宝贝概述*/
+		div.decrible{
+			width:1200px;
+			margin: 0 auto;
+
+		}
+		div.decrible>nav>ul{
+			display: flex;
+			padding-left: 0;
+		}
+		div.decrible>nav>ul>li>span{
+			margin:0 10px;
+			color:#ddd;
+		}
+		div.decrible>nav>ul>li:last-child>a{
+			color:#999999;
+		}
+		#pic{
+			width: 400px;
+			height: 400px;
+			
+			position: relative;
+		}
+		#pic>img{
+			width: 100%;
+			position: absolute;
+			left:0;
+			top:0;
+			
+			
+		}
+		#pic>img:nth-child(1){
+			z-index: 1;
+		}
+		#small-pic{
+			margin-top: 10px;
+			
+		}
+		#small-pic>img{
+			padding:1px;
+		}
+		#small-pic>img:hover{
+			padding:0;
+			border:1px solid red;
+		}
+		/*暂时无法切换，结束*/
+		/*主图右侧描述*/
+		#main-discrible{
+			display: flex;
+		}
+		#pic-dicrible{
+			flex:1;
+			height: 600px;
+			margin-left: 20px;
+
+
+		}
+		#pic-dicrible>h1{
+			font-size: 1.5em;
+			margin-bottom: 5px;
+		}
+		#pre{
+			background-color: #F7F7F7;
+			padding: 5px 16px;
+		}
+		#pre>p:first-child>span{
+			color:red;
+			font-weight:bold;
+			margin-left:10px;
+		}
+		#pre>p:first-child>span:last-child{
+			float:right;
+		}
+		#pre>p:nth-child(2)>span{
+			color:red;
+			margin-left: 21px;
+			font-weight: bold;
+			font-size:1.8em;
+		}
+		#pre>p:nth-child(3)>s{
+			margin-left: 39px;
+		}
+		#adrees{
+			margin-top: 10px;
+		}
+		#adrees>select{
+			width: 83px;
+			height: 29px;
+			border:1px solid #ddd;
+		}
+		/*月销量一行*/
+		#month-sail{
+			height: 35px;
+			border-top:1px dotted #ddd;
+			border-bottom: 1px dotted #ddd;
+			display: flex;
+		}
+		#month-sail>li{
+			margin:6px;
+			padding:0 30px;
+		}
+		#month-sail>li>span{
+			color:red;
+			font-weight:bold;
+		}
+		#month-sail>li:nth-child(2){
+			border-left: 1px dotted #ddd;
+			border-right: 1px dotted #ddd;
+		}
+		#taste>a,#packing>a{
+			position: relative;
+			border:1px solid #ddd;
+			margin-right: 5px;
+			padding: 5px;
+		}
+		#taste,#packing{
+			margin: 23px 23px 23px 0;
+		}
+		#taste>a>span,#packing>a>span{
+			width: 10px;
+			height:10px;
+		}
+		#taste>a:first-child,#packing>a:first-child{
+			margin-left: 30px;
+		}
+		#taste>a:hover span,#packing>a:hover span{
+			
+			background:url(images/sys_item_selected.gif) no-repeat;
+			position: absolute;
+			right:0;
+			bottom: 0;
+		}
+		#taste>a:hover,#packing>a:hover{
+			padding:4px;
+
+			border:2px solid red;
+		}
+		/*选择数量一行*/
+		#num>span{
+			    display: inline-block;
+			    width: 30px;
+			    height: 30px;
+			    background-color: #e6e6e6;
+			    text-align: center;
+			    line-height: 30px;
+		}
+		#num>span:first-child{
+			margin-left:29px;
+		}
+		#num>input{
+			width: 53px;
+    		height: 25px;
+		}
+		#button{
+			margin-top:30px;
+			margin-left: 50px;
+		}
+		#button>input{
+			width: 98px;
+			height: 40px;
+			border:1px solid red;
+		}
+		#button>input:nth-child(1){
+			background-color: #FFEDED;
+			color:red;
+
+		}
+		#button>input:nth-child(2){
+			background-color:#F03726;
+			color: white;
+			margin-left: 5px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div id="header">
+			<!-- 头部部分，分三行 -->
+			<!-- 1、登陆注册一行 -->
+			<div id="login">
+				<!-- 靠左的登陆注册 -->
+				<a href="#">亲，请登录</a>
+				<a href="#">免费注册</a>
+				<ul>
+					<li><a href="#">商城中心</a></li>
+					<li>
+						<span></span>
+						<a href="#">个人中心</a>
+					</li>
+					<li>
+						<span></span>
+						<a href="#">购物车</a>
+					</li>
+					<li>
+						<span ></span>
+						<a href="#">收藏夹</a>
+					</li>
+					
+				</ul>
+			</div>
+			<!-- 2、网页图标、搜索一行 -->
+			<div id="search">
+				<img src="images/logobig.png">
+				<button type="button"><input type="text" name="search" placeholder="搜索">搜索</button>
+			</div>
+			<!-- 横向主分类一行 -->
+			<div id="main-nav">
+				<ul>
+					<li><a href="#">全部分类</a></li>
+					<li><a href="#">首页</a><span></span></li>
+					<li><a href="#">闪购</a><span></span></li>
+					<li><a href="#">限时抢</a><span></span></li>
+					<li><a href="#">团购</a><span></span></li>
+					<li><a href="#">大包装</a></li>
+				</ul>
+				
+			</div>	
+		</div>
+	</header>
+	<!-- 详情页头部,上侧为面包屑导航，（左侧4福图片），右侧宝贝概述 -->
+	<div class="decrible">
+		<nav id="bord-nav">
+			<ul>
+				<li><a href="#">首页</a><span>/</span></li>
+				<li><a href="#">分类</a><span>/</span></li>
+				<li><a href="#">内容</a></li>
+			</ul>
+		</nav>
+		<div id="main-discrible">
+		   <div>
+				<div id="pic">
+					<img src="images/01.jpg">
+					<img src="images/02.jpg">
+					<img src="images/03.jpg">
+
+				</div>
+				<div id="small-pic">
+					<img src="images/01_small.jpg">
+					<img src="images/02_small.jpg">
+					<img src="images/03_small.jpg">
+				</div>
+			</div>	
+			<div id="pic-dicrible">
+					<h1>良品铺子 手剥松子218g 坚果炒货 巴西松子</h1>
+					<div id="pre">
+						<p>店铺优惠<span>购物满2件打8折，满3件7折</span><span>点击领券</span></p>
+						<p>促销价<span>&yen;56.80</span></p>
+						<p>原价<s>&yen;66.80</s></p>
+					</div>
+					<div id="adrees">配送至
+						<select>
+							<option>浙江</option>
+							<option selected="selected">山东</option>
+							<option>湖北</option>
+						</select>
+						<select>
+							<option>宁波</option>
+							<option selected="selected">嘉兴</option>
+							<option>杭州</option>
+						</select>
+						<select>
+							<option selected="selected">瑞安</option>
+							<option>恒安</option>
+							
+						</select>  快递费10元
+					</div>
+					<ul id="month-sail">
+						<li>月销量<span>1024</span></li>
+						<li>累计销量<span>2654</span></li>
+						<li>累计评价<span>625</span></li>
+					</ul>
+					<div id="taste">
+						口味
+						<a href="#">原味<span></span></a>
+						<a href="#">奶油<span></span></a>
+						<a href="#">炭烧<span></span></a>
+						<a href="#">咸香<span></span></a>
+					</div>
+					<div id="packing">
+						包装
+						<a href="#">手袋专人份<span></span></a>
+						<a href="#">礼盒双人份<span></span></a>
+						<a href="#">全家福礼包<span></span></a>
+					</div>
+					<div id="num">
+						数量
+						<span>-</span>
+						<input type="text" name="num" value="1">
+						<span>+</span>
+						库存1000件
+					</div>
+					<div id="button">
+						<input type="button" name="buy" value="立即购买">
+						<input type="button" name="save" value="加入购物车">
+					</div>
+			</div>
+		</div>
+	</div>
+	<!-- 优惠套装 -->
+	<div>
+		
+	</div>
+	<!-- 看了又看和宝贝详情 -->
+	<div>
+		
+	</div>
+</body>
+</html>
